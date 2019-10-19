@@ -4,4 +4,4 @@ Builds a docker image and launches a shiny app.
 
 
 
-chmod +x myscript.command
+chmod +x  775 myscript.command
