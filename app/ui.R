@@ -1,6 +1,10 @@
 library(shiny)
-library(tidyquant)
 library(janitor)
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(TTR)
+library(purrr)
 library(gridExtra)
 
 theme_set(theme_light())

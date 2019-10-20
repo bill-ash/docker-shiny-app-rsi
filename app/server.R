@@ -14,7 +14,7 @@ server <- shinyServer(function(input, output, session) {
     vec <- vector("list")
     
     for (i in seq_along(z)) {
-        vec[[i]] <- RSI(z[[i]][7])
+        vec[[i]] <- TTR::RSI(z[[i]][7])
     }
     
     p <- map_df(vec, tibble, .id = "RSI") 

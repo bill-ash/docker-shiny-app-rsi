@@ -21,7 +21,7 @@ RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubu
 
 # Install R packages that are required
 # TODO: add further package if you need!
-RUN R -e "install.packages(c('shiny', 'shinydashboard', 'tidyquant', 'gridExtra', 'janitor'), repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages(c('shiny', 'readr', 'dplyr', 'ggplot2', 'purrr', 'TTR', 'gridExtra', 'janitor'), repos='http://cran.rstudio.com/')"
 
 # Copy configuration files into the Docker image
 COPY shiny-server.conf  /etc/shiny-server/shiny-server.conf
