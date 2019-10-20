@@ -10,6 +10,8 @@ tickers <- SP500 %>%
     distinct(symbol) %>% 
     unlist() %>% 
     as.vector()
+
+
 # Define UI for application that draws a histogram
 ui <- shinyUI(fluidPage(
     
@@ -23,11 +25,16 @@ ui <- shinyUI(fluidPage(
                                label = "Ticker", 
                                multiple = FALSE, 
                                choices = tickers),
+            
             shiny::dateRangeInput(inputId = "date", 
                                   label = "Date Range:", 
                                   start = "2019-01-01", 
-                                  end = Sys.Date())
-        ),
+                                  end = Sys.Date()),
+            
+            shiny::downloadButton(outputId = "downloadData", 
+                                  label = "Download RSI:", )
+            
+            ),
         
         
         # Show a plot of the generated distribution

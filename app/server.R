@@ -22,11 +22,17 @@ server <- shinyServer(function(input, output, session) {
     screen <- bind_cols(SP500, p) %>% janitor::clean_names()
     
     
-    top <- reactive({
-        
+    dat <- reactive({
         screen %>% 
             filter(symbol %in% input$ticker, 
                    date >= input$date[1], date <= input$date[2]) %>% 
+            as_tibble()
+    })
+    
+    
+    top <- reactive({
+        
+         dat() %>% 
             ggplot(aes(date, dbl))+
             geom_line()+
             geom_hline(yintercept = 30, color = "green")+
@@ -57,12 +63,12 @@ server <- shinyServer(function(input, output, session) {
             ungroup() %>% 
             ggplot(aes(date, cumrtn))+
             geom_line()+
-            geom_rect(mapping = aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf), color = "grey", alpha = 0.1)+
+            geom_rect(mapping = aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf),  color = "grey", alpha = 0.1)+
             scale_x_date(date_breaks = "1 month", date_labels = "%m-%d-%y")+
             scale_y_continuous(labels = scales::percent_format()) +
             labs(x = "", 
-                 y = "Return")
-        #theme(axis.text.x = element_text(angle = 45, hjust = 1))
+                 y = "Return") +
+        theme(axis.text.x = element_text(angle = 45, hjust = 1))
         
         
         
@@ -70,4 +76,14 @@ server <- shinyServer(function(input, output, session) {
     
     output$RSI <- renderPlot(grid.arrange(top(), bottom(), ncol = 1))
     
-})
+    output$downloadData <- downloadHandler(
+        filename = function() {
+            paste("data-", Sys.Date(), ".csv", sep="")
+        },
+        content = function(file) {
+            write.csv(dat(), file)
+        }
+    ) 
+        
+        })
+    
