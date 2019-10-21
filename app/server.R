@@ -25,8 +25,8 @@ server <- shinyServer(function(input, output, session) {
     dat <- reactive({
         screen %>% 
             filter(symbol %in% input$ticker, 
-                   date >= input$date[1], date <= input$date[2]) %>% 
-            as_tibble()
+                   date >= input$date[1], date <= input$date[2]) 
+            
     })
     
     
@@ -41,7 +41,7 @@ server <- shinyServer(function(input, output, session) {
                  x = "", 
                  y = "RSI")+
             labs(x = "", y = "RSI")+
-            scale_x_date(date_breaks = "1 month", date_labels = "%m-%d")
+            scale_x_date(date_breaks = "1 month", date_labels = "%m-%d") 
         #theme(axis.text.x = element_text(angle = 45, hjust = 1))
         
         
@@ -67,8 +67,8 @@ server <- shinyServer(function(input, output, session) {
             scale_x_date(date_breaks = "1 month", date_labels = "%m-%d-%y")+
             scale_y_continuous(labels = scales::percent_format()) +
             labs(x = "", 
-                 y = "Return") +
-        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+                 y = "Return") 
+        #theme(axis.text.x = element_text(angle = 45, hjust = 1))
         
         
         
